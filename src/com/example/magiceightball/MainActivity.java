@@ -7,6 +7,8 @@ package com.example.magiceightball;
  * @author //http://shaikhhamadali.blogspot.com/2013/10/android-sensors-accelerometer-android.html 
 */
 
+import java.util.Random;
+
 import android.app.Activity;
 import android.graphics.Color;
 import android.hardware.Sensor;
@@ -26,6 +28,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 	private boolean shake = false;
 	private long lastUpdate;
 	RelativeLayout eb_Accelerometer;
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 		}
 
 	}
+	
 
 	private void getAccelerometer(SensorEvent event) {
 		float[] values = event.values;
@@ -64,20 +68,25 @@ public class MainActivity extends Activity implements SensorEventListener {
 		long actualTime = System.currentTimeMillis();
 		if (accelationSquareRoot >= 2)
 		{
-			if (actualTime - lastUpdate < 70) {
+			if (actualTime - lastUpdate < 100) {
 				return;
 			}
 			lastUpdate = actualTime;
 			
 			if (shake) {
-				Toast.makeText(this, "I don't think so.", Toast.LENGTH_SHORT)
-				.show();
+				//Toast.makeText(this, "I don't think so.", Toast.LENGTH_SHORT).show();
+				String[] toastMessages = new String[] {"Don't bet on it!", "Who knows?", "I don't think so.", "Definitely!!!", "Are you kidding?",
+						"Signs point to yes.","Concentrate and ask again.","Without a doubt.","My reply is no.","Go for it!", "You wish."};
+
+				// Get an index between 0 and the last index in the messages array 
+				int randomMsgResp = new Random().nextInt(toastMessages.length - 1);
+
+				Toast.makeText(getApplicationContext(), toastMessages[randomMsgResp], Toast.LENGTH_LONG).show();
+			
+			}// else {
+				//Toast.makeText(this, "Definitely!!!", Toast.LENGTH_SHORT).show();
 				
-			} else {
-				Toast.makeText(this, "Definitely!!!", Toast.LENGTH_SHORT)
-				.show();
-				
-			}
+			//}
 			
 			shake = !shake;
 		}
