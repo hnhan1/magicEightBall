@@ -15,6 +15,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
@@ -74,7 +75,12 @@ public class MainActivity extends Activity implements SensorEventListener {
 			lastUpdate = actualTime;
 			
 			if (shake) {
-				//Toast.makeText(this, "I don't think so.", Toast.LENGTH_SHORT).show();
+				
+				//add sound on shake
+				MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.magicchime);
+				mediaPlayer.start();
+				
+				//String array to contain toast messages
 				String[] toastMessages = new String[] {"Don't bet on it!", "Who knows?", "I don't think so.", "Definitely!!!", "Are you kidding?",
 						"Signs point to yes.","Concentrate and ask again.","Without a doubt.","My reply is no.","Go for it!", "You wish."};
 
@@ -83,10 +89,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 
 				Toast.makeText(getApplicationContext(), toastMessages[randomMsgResp], Toast.LENGTH_LONG).show();
 			
-			}// else {
-				//Toast.makeText(this, "Definitely!!!", Toast.LENGTH_SHORT).show();
-				
-			//}
+			}
 			
 			shake = !shake;
 		}
